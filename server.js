@@ -21,9 +21,11 @@ app.use(morgan('dev'))
 
 
 import userRoutes from './routes/user.route.js'
+import blogRoutes from './routes/blog.route.js'
 
 //router
 app.use('/api/v1/user',userRoutes);
+app.use('/api/v1/blog',blogRoutes);
 
 
 

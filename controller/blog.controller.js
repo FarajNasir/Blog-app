@@ -1,0 +1,146 @@
+import { Blog } from "../models/blog.model.js";
+
+//get single blog
+const getSingleBlog=async(req,res)=>{
+    try {
+        const {id}=req.params
+        const blog=await Blog.findById(id)
+
+        if(!blog){
+               return res.status(401).send({
+            success:false,
+            message:"No blogs found of this id",
+            
+        })
+        }
+
+        return res.status(200).send({
+            success:true,
+            message:"fetched single blogs",
+            blog,
+        })
+    } catch (error) {
+         console.log(error)
+        return res.status(500).send({
+            success:false,
+            message:"error while getting single blog",
+            error
+        })
+    }
+}
+
+// getall blog
+const getAllBlogController=async(req,res)=>{
+    try {
+        const blogs=await Blog.find({})
+
+        if (!blogs) {
+            return res.status(401).send({
+            success:false,
+            message:"No blogs  found",
+            
+        })
+        }
+            return res.status(200).send({
+            success:true,
+            message:"All blogs blogs  found",
+            blogs,
+            BlogCount:blogs.length
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({
+            success:false,
+            message:"error while getting blogs",
+            error
+        })
+    }
+}
+
+// create blog container
+const createBlogController=async(req,res)=>{
+    try {
+        const {title,description,image}=req.body
+
+        // vallidation 
+        if (!title || !description || !image) {
+            return res.status(400).send({
+            success:false,
+            message:"please provide all field",
+            
+        })
+        }
+        //method 1
+        const newBlog=new Blog({title,description,image})
+        await newBlog.save()
+
+        // //method 2
+        //    const newblog = await Blog.create({
+        //     title,
+        //     description,
+        //     image
+        // })
+         return res.status(200).send({
+            success:true,
+            message:"blog created",
+            newBlog
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send({
+            success:false,
+            message:"error while creating blog",
+            error
+        })
+    }
+}
+
+// update blog
+const updateBlogController=async(req,res)=>{
+    try {
+        const {id}=req.params
+        const {title,description,image}=req.body
+        const updateBlog=await Blog.findByIdAndUpdate(id,{
+            title,
+            description,
+            image
+        },
+        {new:true}
+    )
+
+    return res.status(200).send({
+            success:true,
+            message:"blog updated",
+            updateBlog
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send({
+            success:false,
+            message:"error while updating blog",
+            error
+        })
+    }
+}
+
+//Delete blog
+const deleteBlogController=async(req,res)=>{
+    try {
+        const {id}=req.params
+        const deleteBlog=await Blog.findByIdAndDelete(id)
+        return res.status(200).send({
+            success:true,
+            message:"blog deleted",
+        })
+
+    } catch (error) {
+         console.log(error)
+        return res.status(400).send({
+            success:false,
+            message:"error while deleting blogs",
+            error
+        })
+    }
+}
+
+export {getSingleBlog,getAllBlogController,createBlogController,updateBlogController,deleteBlogController}
