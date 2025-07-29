@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getSingleBlog,getAllBlogController,createBlogController,updateBlogController,deleteBlogController } from "../controller/blog.controller.js";
+import { getSingleBlog,getAllBlogController,createBlogController,updateBlogController,deleteBlogController, userBlogController } from "../controller/blog.controller.js";
 
 const router=Router()
 
@@ -17,6 +17,9 @@ router.route("/update-blog/:id").put(updateBlogController)
 
 // delete blog || BLOG
 router.route("/delete-blog/:id").delete(deleteBlogController)
+
+// user bog || get
+router.route("/user-blog/:id").get(userBlogController)
 
 
 export default router

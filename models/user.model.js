@@ -12,7 +12,12 @@ const userSchema=new mongoose.Schema({
      password:{
         type:String,
         require:[true,"password is required"]
-    }
+    },
+    blogs:[{
+        type:mongoose.Types.ObjectId,
+        ref:"Blog"
+    },
+]
 },{timestamps:true})
 
 export const User=mongoose.model('User',userSchema)
