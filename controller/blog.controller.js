@@ -189,7 +189,7 @@ const userBlogController=async(req,res)=>{
             success:false,
             message:"error in user blogs",
             error
-        })
+        });
   }
 }
 

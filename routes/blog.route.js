@@ -4,10 +4,10 @@ import { getSingleBlog,getAllBlogController,createBlogController,updateBlogContr
 const router=Router()
 
 // get single blog || GET 
-router.route("/getsingle-blog/:id").get(getSingleBlog)
+router.route("/getsingle-blog/:id").get(getSingleBlog);
 
 // get all blogs || GET
-router.route("/all-blog").get(getAllBlogController)
+router.route("/all-blog").get(getAllBlogController);
 
 // create blog || POST
 router.route("/create_blog").post(createBlogController);
