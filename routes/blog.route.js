@@ -10,16 +10,16 @@ router.route("/getsingle-blog/:id").get(getSingleBlog)
 router.route("/all-blog").get(getAllBlogController)
 
 // create blog || POST
-router.route("/create_blog").post(createBlogController)
+router.route("/create_blog").post(createBlogController);
 
 // update blog || PUT
-router.route("/update-blog/:id").put(updateBlogController)
+router.route("/update-blog/:id").put(updateBlogController);
 
 // delete blog || BLOG
-router.route("/delete-blog/:id").delete(deleteBlogController)
+router.route("/delete-blog/:id").delete(deleteBlogController);
 
 // user bog || get
-router.route("/user-blog/:id").get(userBlogController)
+router.route("/user-blog/:id").get(userBlogController);
 
 
 export default router
