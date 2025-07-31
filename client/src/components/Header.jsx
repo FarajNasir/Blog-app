@@ -1,13 +1,25 @@
 import React, { useState } from 'react'
 import {Box,AppBar,Toolbar,Button,Typography,Tab,Tabs} from '@mui/material'
-import { Link } from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import { Link, Navigate,useNavigate } from 'react-router-dom'
+import {useSelector,useDispatch} from 'react-redux'
+import { authAction } from '../redux/store'
 
 const Header = () => {
    //global state
+   const navigate=useNavigate()
    const isLogin=useSelector(state=>state.isLogin)
-   console.log(isLogin)
+   const handleLogout=()=>{
+    try {
+      dispatch(authAction.logout())
+      alert("logout successfully")
+      navigate('/login')
+    } catch (error) {
+      console.log(error)
+    }
+   }
    const [value,setValue]=useState()
+
+   const dispatch=useDispatch()
   return (
    <>
     <AppBar position='sticky' sx={{backgroundColor:"black",}}>
@@ -17,7 +29,7 @@ const Header = () => {
             <Box sx={'flex' } marginLeft="auto" marginRight="auto">
             <Tabs textColor='inherit' value={value} onChange={(e,value)=>setValue(value)}> 
                <Tab label="Blogs" LinkComponent={Link} to="/blogs"/>
-               <Tab label="my Blogs" LinkComponent={Link} to="/my-blogs"/>
+               <Tab label="My Blogs" LinkComponent={Link} to="/my-blogs"/>
             </Tabs>
            </Box>
            )}
@@ -41,7 +53,7 @@ const Header = () => {
            </>)}
 
            {isLogin && (
-            <Button sx={{ margin: 1, color: "white" }}>
+            <Button onClick={handleLogout} sx={{ margin: 1, color: "white" }}>
                 logout
             </Button>
            )}
