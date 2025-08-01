@@ -33,7 +33,7 @@ const getSingleBlog = async (req, res) => {
 // getall blog
 const getAllBlogController = async (req, res) => {
   try {
-    const blogs = await Blog.find({});
+    const blogs = await Blog.find({}).populate("user");
 
     if (!blogs) {
       return res.status(401).send({

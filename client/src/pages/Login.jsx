@@ -27,7 +27,8 @@ const Login = () => {
     e.preventDefault()
     try {
       const {data}=await axios.post('/api/v1/user/login',{email:input.email,password:input.password})
-      if(data){
+      if(data.success){
+        localStorage.setItem('userId',data?.user._id)
         dispatch(authAction.login())
         alert("user login successfully")
         navigate("/")
