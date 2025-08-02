@@ -6,9 +6,11 @@ import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton } from "@mui/material";
+import { useNavigate } from 'react-router-dom'
+import { Box, IconButton } from "@mui/material";
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import axios from "axios";
 
 
 
@@ -17,8 +19,32 @@ export default function BlogCard({
   description,
   image,
   username,
-  time
-}) {
+  time,
+  id,
+  isUser
+}) 
+
+{
+  const navigate=useNavigate()
+
+// console.log(isUser);
+const handleedit=()=>{
+   navigate(`/blog-detail/${id}`)
+}
+
+const handleDelete=async()=>{
+  try {
+    const {data}=await axios.delete(`/api/v1/blog/delete-blog/${id}`)
+    if (data.success) {
+      alert("blog deleted successfully")
+      //  navigate("/my-blogs"); 
+      window.location.reload();
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
   
   return (
     <Card
@@ -33,7 +59,16 @@ export default function BlogCard({
         },
       }}
     >
-      
+      {isUser && (
+        <Box display={"flex"}>
+          <IconButton onClick={handleedit}  sx={{ marginLeft: "auto" }}>
+            <ModeEditIcon  />
+          </IconButton>
+          <IconButton >
+            <DeleteIcon onClick={handleDelete}/>
+          </IconButton>
+        </Box>
+      )}
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
